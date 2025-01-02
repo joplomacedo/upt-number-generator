@@ -1,0 +1,254 @@
+.app {
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  color: rgba(255, 255, 255, 0.87);
+  position: relative;
+  isolation: isolate;
+  background-color: #555b61;
+}
+
+.titleBar {
+  border-bottom: 1px solid #ffffff21;
+  padding: 0.5rem 0.75rem;
+}
+
+.body {
+  flex-grow: 1;
+}
+
+.tabs {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+}
+
+.tabsHeader {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-bottom: 1px solid #ffffff21;
+  word-break: break-all;
+  align-items: end;
+}
+
+.tab {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  position: relative;
+  font-size: 0.9em;
+  font-weight: 700;
+
+  &:after {
+    content: '';
+    position: absolute;
+
+    inset-inline: 0.3rem;
+    bottom: 0;
+    translate: 0 50%;
+    border-radius: 5px;
+    transition: 0.2s;
+    height: 0px;
+  }
+
+  &.is-active:after {
+    height: 2px;
+    background-color: #00b477;
+  }
+}
+
+.tabsBody {
+}
+
+.tabContent {
+  height: 100%;
+  grid-template-rows: 1fr auto;
+
+  &.is-active {
+    display: grid;
+  }
+
+  &.is-inactive {
+    display: none;
+  }
+}
+
+.logo {
+  width: 5rem;
+}
+
+.nums {
+  display: grid;
+  border: 1px solid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5em;
+}
+
+.num:not(:last-child) {
+  border-right: 1px solid;
+}
+
+.num.is-selected {
+  background-color: #82d5f6;
+}
+
+.historyItem {
+  display: flex;
+  justify-content: space-between;
+}
+
+.historyItemDate {
+  color: var(--);
+  width: fit-content;
+}
+
+.terminal {
+  flex-grow: 1;
+  overflow: auto;
+  padding: 0.3rem;
+  background: #353940;
+  box-shadow: inset 0 1px 1px #00000030;
+}
+
+.terminalActions {
+  background: #353940;
+  border-top: 1px solid #ffffff21;
+  padding: 0.5rem 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 0.5em;
+}
+
+.logItem {
+  display: flex;
+  gap: 0.6em;
+  align-items: baseline;
+  line-height: 1.1;
+  margin-bottom: 0.15em;
+
+  &:not(:last-child) {
+    opacity: 0.5;
+  }
+}
+
+.logItemIcon {
+  position: relative;
+  top: 0.2em;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.4em;
+  border: 1px solid;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #ffffff21;
+  font-weight: 500;
+  font-size: 0.9rem;
+
+  &[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.button--primary {
+  background: hsla(160, 100%, 35%, 1);
+
+  &:not([disabled]) {
+    &:hover {
+      background: hsla(160, 100%, 40%, 1);
+    }
+
+    &:active {
+      background: hsla(160, 100%, 30%, 1);
+    }
+  }
+}
+
+.button--success {
+  background: hsla(160, 100%, 35%, 1);
+
+  &:not([disabled]) {
+    &:hover {
+      background: hsla(160, 100%, 40%, 1);
+    }
+
+    &:active {
+      background: hsla(160, 100%, 30%, 1);
+    }
+  }
+}
+
+.button--error {
+  background: hsla(351, 50%, 50%, 1);
+
+  &:not([disabled]) {
+    &:hover {
+      background: hsla(351, 50%, 55%, 1);
+    }
+
+    &:active {
+      background: hsla(351, 50%, 42%, 1);
+    }
+  }
+}
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: #00000080;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal {
+  background-color: #fff;
+  width: 300px;
+  max-width: 100%;
+  color: #fff;
+  background: #353940;
+  border-radius: 3px;
+}
+
+.modalTopBar {
+  background-color: #555b61;
+  padding: 0.5rem;
+  border-radius: 3px 3px 0 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.modalBody {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.modalTitle {
+  opacity: 0.9;
+}
+.modalNumber {
+  font-size: 3rem;
+  font-weight: 600;
+}
+.modalFooter {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 0.5em;
+  padding: 0.5rem 0.75rem 0.5rem;
+  border-top: 1px solid #ffffff21;
+}
+
+.historyItemDate {
+  opacity: 0.5;
+}
