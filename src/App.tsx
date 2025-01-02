@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import type { ReactNode, ReactElement } from 'react';
 import { createPortal } from 'react-dom';
 import style from './App.module.css';
-import { motion } from 'motion/react';
 import { useLocalStorage } from '@uidotdev/usehooks';
 import { getFakeLog } from './get-fake-log';
 import type { Log } from './get-fake-log';
@@ -25,8 +24,6 @@ const iconsByLogType = {
   warn: IconTriangleAlert,
   success: IconCheck,
 } as const;
-
-function LogIcon({ color, colorHover }) {}
 
 function App() {
   const [tab, setTab] = useState<'generator' | 'history'>('generator');
