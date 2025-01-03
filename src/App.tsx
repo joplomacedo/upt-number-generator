@@ -28,7 +28,29 @@ const iconsByLogType = {
   success: IconCheck,
 } as const;
 
+
+function AppLoader() {
+  return (
+    <div className={style.appLoader}>
+      <div className={style.appLoaderBody}>
+        <div className={style.appLoaderBar}></div>
+        <div className={style.appLoaderLogo}><span>UPT</span><span className={style.appLoaderLogoDivider}>|</span><span>N-Gen</span> </div>
+        <div className={style.appLoaderTagline}>The Gold Standard in Random Number Generation.</div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
+  return (
+    <>
+      <AppLoader />
+      <AppLoaded />
+    </>
+  );
+}
+
+function AppLoaded() {
   const [tab, setTab] = useState<'generator' | 'history'>('generator');
 
   return (
