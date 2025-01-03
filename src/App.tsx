@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import type { ReactNode, ReactElement } from 'react';
+import type { ReactNode, ComponentPropsWithoutRef } from 'react';
 import { createPortal } from 'react-dom';
 import style from './App.module.css';
 import { useLocalStorage } from '@uidotdev/usehooks';
@@ -16,6 +16,8 @@ import {
   X as IconX,
   Play as IconPlay,
 } from 'lucide-react';
+
+import type { LucideIcon } from 'lucide-react';
 
 const iconsByLogType = {
   info: IconInfo,
@@ -108,9 +110,9 @@ function NumberGenerator() {
   const [isLogAnimating, setIsLogAnimating] = useState<boolean>(false);
   const [isNumberModalOpen, setIsNumberModalOpen] = useState<boolean>(false);
 
-  const [history, setHistory] = useLocalStorage<
+  const setHistory = useLocalStorage<
     { number: number; date: Date }[]
-  >('numberHistory', []);
+  >('numberHistory', [])[1]
 
   const terminalEl = useRef<HTMLDivElement | null>(null);
   const terminalBottomEl = useRef<HTMLDivElement | null>(null);
@@ -248,10 +250,15 @@ function AnimatedLog({
     <div>
       {' '}
       {printedLog.map(([type, text], index) => {
-        const Icon = type ? iconsByLogType[type] : <></>;
+        let Icon: null | LucideIcon = null;
+
+        if ( typeof type === 'string' && type in iconsByLogType ) {
+          Icon = iconsByLogType[type as keyof typeof iconsByLogType] as LucideIcon;
+        }
+
         return (
           <div className={style.logItem} key={index}>
-            <Icon className={style.logItemIcon} size={16} /> {text}
+            {Icon && <Icon className={style.logItemIcon} size={16} />} {text}
           </div>
         );
       })}
@@ -326,11 +333,9 @@ function Button({
   variant = 'primary',
   ...props
 }: {
-  children: ReactNode;
-  icon?: ReactElement;
-  className?: string;
+  icon?: LucideIcon;
   variant?: 'success' | 'primary' | 'error';
-}) {
+} & ComponentPropsWithoutRef<"button">) {
   return (
     <button
       className={`${style.button} ${style[`button--${variant}`]} ${className}`}
