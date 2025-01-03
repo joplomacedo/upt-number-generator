@@ -6,6 +6,7 @@ import { useLocalStorage } from '@uidotdev/usehooks';
 import { getFakeLog } from './get-fake-log';
 import type { Log } from './get-fake-log';
 import { getRandomNumberBetween, formatDate } from './utils';
+import { motion, AnimatePresence } from "motion/react"
 
 import {
   Bug as IconBug,
@@ -94,9 +95,8 @@ function TabContent({
 }) {
   return (
     <div
-      className={`${style.tabContent} ${
-        style[isActive ? 'is-active' : 'is-inactive']
-      }`}
+      className={`${style.tabContent} ${style[isActive ? 'is-active' : 'is-inactive']
+        }`}
     >
       {children}
     </div>
@@ -157,8 +157,8 @@ function NumberGenerator() {
     if (terminalEl.current) {
       autoScroll.current =
         terminalEl.current.scrollHeight -
-          terminalEl.current.scrollTop -
-          terminalEl.current.clientHeight <
+        terminalEl.current.scrollTop -
+        terminalEl.current.clientHeight <
         1;
     }
   }
@@ -196,23 +196,27 @@ function NumberGenerator() {
         </Button>
       </div>
 
-      {isNumberModalOpen &&
-        createPortal(
-          <NumberModal
-            number={selectedNumber as number}
-            onClose={() => setIsNumberModalOpen(false)}
-          />,
-          document.body
-        )}
+
+      {createPortal(
+        <AnimatePresence>
+          {isNumberModalOpen &&
+              <NumberModal
+                number={selectedNumber as number}
+                onClose={() => setIsNumberModalOpen(false)}
+              />
+          }
+        </AnimatePresence>,
+        document.body
+      )}
     </>
   );
 }
 
 function AnimatedLog({
   log,
-  onProgress = () => {},
-  onComplete = () => {},
-  onStart = () => {},
+  onProgress = () => { },
+  onComplete = () => { },
+  onStart = () => { },
 }: {
   log: Log;
   onProgress?: () => void;
@@ -252,7 +256,7 @@ function AnimatedLog({
       {printedLog.map(([type, text], index) => {
         let Icon: null | LucideIcon = null;
 
-        if ( typeof type === 'string' && type in iconsByLogType ) {
+        if (typeof type === 'string' && type in iconsByLogType) {
           Icon = iconsByLogType[type as keyof typeof iconsByLogType] as LucideIcon;
         }
 
@@ -310,8 +314,26 @@ function NumberModal({
   onClose: () => void;
 }) {
   return (
-    <div className={style.modalBackdrop}>
-      <div className={style.modal}>
+    <motion.div
+      className={style.modalBackdrop}
+        initial={{ opacity: .8 }}
+        exit={{ opacity: 0, transition: { duration: .1 } }}
+        animate={{ opacity: 1 }}
+      >
+      <motion.div
+        className={style.modal}
+        initial={{
+          scale: .9
+        }}
+        exit={{
+          scale: .9,
+          transition: { duration: .1 }
+        }}
+        animate={{
+          scale: 1
+        }}
+        >
+          
         <div className={style.modalTopBar}>Generated Number</div>
         <div className={style.modalBody}>
           <p className={style.modalTitle}>The generated number is:</p>
@@ -321,8 +343,8 @@ function NumberModal({
         <div className={style.modalFooter}>
           <Button onClick={onClose}>Acknowledge</Button>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
